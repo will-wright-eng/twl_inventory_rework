@@ -1,51 +1,10 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
-
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-
-.installed.cfg
-bin
-develop-eggs
-dist
-downloads
-eggs
-parts
-src/*.egg-info
-lib
-lib64
-
 *.pyc
 *.pyo
-
 src/Untitled*
+*.ipynb_checkpoints
 
 *.csv
 *.xlsx
 
-*.ipynb_checkpoints
 src/config*
+.DS_Store
