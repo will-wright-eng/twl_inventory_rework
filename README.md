@@ -10,6 +10,12 @@ This repo contains code used in processing inventory tables from BigCommerce (BC
 	- single product test successful
 4. reworked bc_fxns into ls_fxns_base to generate LS import table (no tests yet)
 
+File Dependencies
+![file_dependencies](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/file_dependencies.png)
+
+Directory
+![directory](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/directory.png)
+
 ## TO DO
 ### Need
 
