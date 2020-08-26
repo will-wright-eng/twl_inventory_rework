@@ -3,7 +3,6 @@ src/Untitled*
 *.ipynb_checkpoints
 __pycache__/
 
-*.csv
 *.xlsx
 
 src/config*

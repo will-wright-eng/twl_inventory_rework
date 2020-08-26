@@ -9,27 +9,28 @@ This repo contains code used in processing inventory tables from BigCommerce (BC
 3. developed bc_fxns_base and bc_fxns_core to generate BC import table
 	- single product test successful
 4. reworked bc_fxns into ls_fxns_base to generate LS import table (no tests yet)
+5. repo cleanup
 
-File Dependencies
+### _File Dependencies_
 ![file_dependencies](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/file_dependencies.png)
 
-Directory
+### _Directory_
 ![directory](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/directory.png)
 
 ## TO DO
-### Need
+### _Need_
 
-- add sku modifier so that skus sort properly (parent then all child rows)
-	- add modifier, sort, remove modifier
-- update linked skus in LS, then BC once LS is confirmed
+- ~~add sku modifier so that skus sort properly (parent then all child rows; add modifier, sort, remove modifier)~~
+- update linked skus in LS, then BC once LS is confirmed (test skus then in-bulk)
+- start planning Amazon/Cadisto implementation
 
-### Want
+### _Want_
 
 - file names and product lists are hard coded --> parameterize!
-- replace jupyter notebooks with shell scripts
+- ~~replace jupyter notebooks with shell scripts~~
 - API calls to BC and LS systems for inventory download/upload (if possible, check docs)
 
-### Nice to have
+### _Nice to have_
 
 - bc_fxns_preprocess & filter_down_bc_product_list need to be combined and generalized to all products
 	- only utilized in downstream code for sku list and product cateogry
@@ -37,17 +38,10 @@ Directory
 ## Important notes
 
 - parent/child orientation in BC import table is essential to successful update
-- 
 
 ## References
 
-_Import/Export for each digital system_
-
-- Amazon Seller Central
-- BigCommerce
-- LightSpeed
-
-_Anatomy_
+_Anatomy of each system_
 
 - import spreadsheet template
 - product hierarchy (Product: SKU, Item: Matrix, etc)
