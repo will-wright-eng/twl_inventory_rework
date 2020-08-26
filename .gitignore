@@ -1,7 +1,7 @@
-*.pyc
-*.pyo
+*.py[cod]
 src/Untitled*
 *.ipynb_checkpoints
+__pycache__/
 
 *.csv
 *.xlsx

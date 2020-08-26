@@ -3,6 +3,17 @@ import pandas as pd
 import string
 import re
 
+def cols_for_export(cols,cols_dict):
+    ncols = []
+    cols_added = []
+    for i in cols:
+        try:
+            ncols.append(cols_dict[i])
+        except KeyError:
+            ncols.append(i)
+            cols_added.append(i)
+    return ncols, cols_added
+    
 def list_files_in_directory(path):
     '''docstring for list_files_in_directory'''
     x = []
@@ -13,13 +24,6 @@ def list_files_in_directory(path):
             x.append(root+'/'+file)
     return x
 
-def process_cols(cols,purpose='for processing'):
-	'''docstring for process_cols
-	for processing: remove special characters
-	'''
-	clean = [i.lower().replace(' ','_').replace('+','').replace('/','_').replace('?','').replace('-','').replace('__','_').replace('t.','t') for i in cols]
-	return clean
-
 def process_cols_v2(cols,purpose='for processing'):
 	'''docstring for process_cols
 	for processing: remove special characters
@@ -27,6 +31,7 @@ def process_cols_v2(cols,purpose='for processing'):
 	chars = re.escape(string.punctuation)
 	clean = [re.sub(r'['+chars+']', '',my_str) for my_str in cols]
 	clean = [i.lower().replace(' ','_') for i in clean]
+	clean = ['product_code_sku' if 'product_code' in i else i for i in clean]
 	return clean
 
 def gen_cols_dict(cols,clean_cols):
