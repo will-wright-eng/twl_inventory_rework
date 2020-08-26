@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from utility_fxns import distribute,process_cols_v2,gen_cols_dict
+from .utility_fxns import distribute,process_cols_v2,gen_cols_dict
 
 def sku_combo_dicts_v2(file_list):
     '''docstring for sku_combo_dicts'''
@@ -25,16 +25,12 @@ def import_template_cols():
     import_cols = process_cols_v2(list(df))
     return import_cols
 
-def extract_and_dict(file_list):
+def extract_and_dict(file_list,master_list_csv,filename1,filename0):
     # extract sku list from processed bigcommerce product table
-    file = 'master_list_discraft_skus.csv'
-    filename = [i for i in file_list if file in i][0]
-    df0 = pd.read_csv(filename)
+    df0 = pd.read_csv(filename0)
     prod_ids = list(df0.product_code_sku)
     # lightspeed inventory
-    file = '2020-08-17_item_listings_local_matches.csv'
-    filename = [i for i in file_list if file in i][0]
-    df1 = pd.read_csv(filename)
+    df1 = pd.read_csv(filename1)
     cols = list(df1)
     clean_cols = process_cols_v2(df1.columns)
     df1.columns = clean_cols

@@ -1,6 +1,6 @@
 import pandas as pd
-from utility_fxns import process_cols,gen_cols_dict
-from bc_fxns_base import generate_id_dict,sku_combo_dicts,sku_struct,clean_products_df,sku_combo_dicts_v2,sku_struct_v2
+from .utility_fxns import process_cols_v2,gen_cols_dict
+from .bc_fxns_base import generate_id_dict,clean_products_df,sku_combo_dicts_v2,sku_struct_v2
 
 def pull_list_of_prods(filename,index_by,category_col):
     '''import discraft product table for list of product IDs and their associated product category
@@ -13,7 +13,7 @@ def full_inventory_df_info(filename,index_by,prod_ids):
     '''docstring for full_inventory_df_info'''
     df = pd.read_csv(filename)
     cols = list(df)
-    clean_cols = process_cols(df.columns)
+    clean_cols = process_cols_v2(df.columns)
     cols_dict = gen_cols_dict(cols,clean_cols)
     df.columns = clean_cols
     df.item_type = df.item_type.apply(lambda x: x.strip())
@@ -39,45 +39,21 @@ def keep_nonempty_cols(df):
     keep_cols = list(temp.cols)
     return keep_cols
 
-def gen_import_table_with_skus(df, prod_ids, id_dict, index_by, stock_field, mfg_code):
+def gen_import_table_with_skus_v2(df,prod_ids,id_dict,index_by,stock_field,mfg_code,file_list):
     '''docstring for gen_import_table_with_skus'''
     products = []
     skus = []
-    dg_color_dict,dg_weight_dict = sku_combo_dicts()
+    color_dicts,weight_dict = sku_combo_dicts_v2(file_list)
     for prod in list(prod_ids):
         # pull product row
         row_prod = df.iloc[id_dict[prod][0]]
-        master_sku = row_prod[index_by]
-        stock_total = row_prod[stock_field]
-        sku_ids = id_dict[prod][2]
-        category = prod_ids[prod]
-        # generate product skus
-        rows_sku, return_flag = sku_struct(master_sku,mfg_code,sku_ids,stock_total,category,dg_color_dict,dg_weight_dict,stock_field,index_by)
-        if return_flag:
-            products.append(row_prod)
-            skus.append(rows_sku)
-        else:
-            print(category)
-    products = pd.concat(products,axis=1).T
-    products = clean_products_df(products)
-    skus = pd.concat(skus)
-    ndf = pd.concat([products,skus])
-    ndf.reset_index(drop=True,inplace=True)
-    ndf = ndf[keep_nonempty_cols(ndf)]
-    ndf.sort_values(by=[index_by,'item_type'],inplace=True)
-    ndf.fillna(value='',inplace=True)
-    return ndf
-
-def gen_import_table_with_skus_v2(df,prod_ids,id_dict,index_by,stock_field,mfg_code):
-    '''docstring for gen_import_table_with_skus'''
-    products = []
-    skus = []
-    color_dicts,weight_dict = sku_combo_dicts_v2()
-    for prod in list(prod_ids):
-        # pull product row
-        row_prod = df.iloc[id_dict[prod][0]]
-        master_sku = row_prod[index_by]
-        stock_total = row_prod[stock_field]
+        master_sku = row_prod.loc[index_by]
+        # modify psku for sort
+        n = 20-len(master_sku)
+        if n>0:
+            master_sku = ('*'*n)+master_sku
+            row_prod.loc[index_by] = master_sku
+        stock_total = row_prod.loc[stock_field]
         sku_ids = id_dict[prod][2]
         category = prod_ids[prod]
         # generate product skus
@@ -94,5 +70,7 @@ def gen_import_table_with_skus_v2(df,prod_ids,id_dict,index_by,stock_field,mfg_c
     ndf.reset_index(drop=True,inplace=True)
     ndf = ndf[keep_nonempty_cols(ndf)]
     ndf.sort_values(by=[index_by,'item_type'],inplace=True)
+    # correct for psku modification
+    ndf[index_by] = ndf[index_by].apply(lambda x: x.replace('*',''))
     ndf.fillna(value='',inplace=True)
     return ndf

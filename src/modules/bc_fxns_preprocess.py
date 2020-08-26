@@ -123,14 +123,14 @@ def label_categories(element):
 
 def process_csv_step_one(df):
     '''docstring for process_csv_step_one
-    remove rows with null elements in product_name and category_string
+    remove rows with null elements in product_name and category
     removes non-discraft product rows
     
     input: product dataframe
     output: additional columns
     '''
     df.product_name = ['null' if pd.isnull(i) else i for i in df.product_name]
-    df.category_string = ['null' if pd.isnull(i) else i for i in df.category_string]
+    df.category = ['null' if pd.isnull(i) else i for i in df.category]
     fxns = [vendor_label,plastic_label,model_label,find_year]
     new_cols = ['label_vendor','label_plastic','label_model','label_year']
     for fxn,col in zip(fxns,new_cols):
@@ -142,8 +142,6 @@ def process_csv_step_one(df):
     df = df.loc[df['label_vendor']!='DISCMANIA']
 
     df = df.reset_index(drop=True)
-    filename = today+'_discraft_products_clean.csv'
-    df.to_csv(filename,index=False)
     return df
 
 def process_csv_step_two(df):
@@ -156,13 +154,13 @@ def process_csv_step_two(df):
         - only relevant categories based on categorie 0 split
         - only visible products
     '''
-    df = df.loc[df.brand=='Discraft Products']
-    df = df.loc[pd.isnull(df.category_string)==False]
+    df = df.loc[df.brand_name=='Discraft Products']
+    df = df.loc[pd.isnull(df.category)==False]
     for n in range(5):
-        df['category_'+str(n)] = df.category_string.apply(lambda x: split_category(x,n))
+        df['category_'+str(n)] = df.category.apply(lambda x: split_category(x,n))
     df['category_flag'] = df.category_0.apply(lambda x: label_categories(x))
     df = df.loc[df['category_flag']]
-    df = df.loc[df['product_visible']=='1']
+    df = df.loc[df['product_visible']=='Y']
     return df
 
 def reduced_table(df):
@@ -174,9 +172,11 @@ def reduced_table(df):
     ndf = ndf[cols]
     return ndf
 
-def join_bulk_import_label(stats_table):
+def join_bulk_import_label(stats_table,file_list):
     '''docstring for join_bulk_import_label'''
-    df = pd.DataFrame(clean_cols(list(pd.read_csv('./bigcommerce/bulk-edit-product-import-template.csv'))))
+    file = 'bulk-edit-product-import-template.csv'
+    filename = [i for i in file_list if file in i][0]
+    df = pd.DataFrame(clean_cols(list(pd.read_csv(filename))))
     df['for import'] = 'bulk import'
     df.columns = ['cols','for_import']
     ndf = stats_table.merge(df,how='left',left_on='index',right_on='cols')
