@@ -1,4 +1,4 @@
-# The Wright Life -- Inventory Rework
+# TWL -- Inventory Rework
 
 The inventory rework exercise was initiated as a part of digital integrations work, where our overarching goal is to implement skuIQ and Cadisto. From what I've found these two integration applications will automate inventory managment and order migration accross sales channels (Amazon and Ebay), eCommerce platform (BigCommerce), and the Point of Sale software (Lightspeed).
 
