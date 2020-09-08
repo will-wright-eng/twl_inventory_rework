@@ -1,6 +1,6 @@
 import pandas as pd
 from .utility_fxns import process_cols_v2,gen_cols_dict
-from .bc_fxns_base import generate_id_dict,clean_products_df,sku_combo_dicts_v2,sku_struct_v2
+from .bc_fxns_base import generate_id_dict,clean_products_df,sku_combo_dicts_v2,sku_struct_v2,product_option_set
 
 def pull_list_of_prods(filename,index_by,category_col):
     '''import discraft product table for list of product IDs and their associated product category
@@ -59,6 +59,7 @@ def gen_import_table_with_skus_v2(df,prod_ids,id_dict,index_by,stock_field,mfg_c
         # generate product skus
         rows_sku, return_flag = sku_struct_v2(master_sku,mfg_code,sku_ids,stock_total,category,color_dicts,weight_dict,stock_field,index_by)
         if return_flag:
+            row_prod = product_option_set(row_prod,category)
             products.append(row_prod)
             skus.append(rows_sku)
         else:
