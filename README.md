@@ -35,6 +35,7 @@ This repo contains code used in processing a subset of products from an inventor
 - file names and product lists are hard coded --> parameterize!
 - ~~replace jupyter notebooks with shell scripts~~
 - API calls to BC and LS systems for inventory download/upload (if possible, check docs)
+- organize directory such that repo can be cloned into place then run
 
 ### _Nice to have_
 
@@ -48,13 +49,14 @@ This repo contains code used in processing a subset of products from an inventor
 ## Important notes
 
 - parent/child orientation in BC import table is essential to successful update
+- BC option sets can duplicate as a product of importing... still not sure why -- insure unique option set naming
 
 ## References
 
 _Anatomy of each system_
 
-- import spreadsheet template
-- product hierarchy (Product: SKU, Item: Matrix, etc)
+- inventory import template
+- product hierarchy (Product: SKU, Item: Matrix, Parent: Child, etc)
 - inventory attributes (price, quantity, vendor, description, etc)
 
 __LightSpeed__
@@ -73,3 +75,7 @@ __BigCommerce__
 __Amazon__
 
 - [Manage your inventory in bulk](https://sellercentral.amazon.com/gp/help/help-page.html?itemID=9DZLGS87GVDT94B&ref=au_9DZLGS87GVDT94B_bred_201201070)
+
+## Receiving Inventory Package
+
+![receiving_inventory_plan](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/receiving_inventory_plan.png)
