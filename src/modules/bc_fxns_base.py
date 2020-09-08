@@ -113,6 +113,21 @@ def clean_products_df(df):
     df.sale_price = round(df.price*0.75,2)
     df.track_inventory = 'by option'
     df.product_condition = 'New'
-    df.option_set = 'inventory_rework_v0.9.1'
+    #df.option_set = 'inventory_rework_v0.9.1'
     df.product_name = [i.title() for i in df.product_name]
     return df
+
+def product_option_set(row_prod,category):
+    '''docstring for product_option_set
+    apply option set name specific to variance category'''
+    option_set_base = 'inventory_rework_v0.9.1'
+    if (category == 'Disc Golf') or (category == 'Disc Golf - Stock Models'):
+        row_prod.loc['option_set'] = option_set_base+'_dg'
+    elif category == 'Ultimate Frisbee':
+        row_prod.loc['option_set'] = option_set_base+'_uf'
+    elif (category == 'Freestyle Frisbee') or (category == 'Sky-Styler Color Options'):
+        row_prod.loc['option_set'] = option_set_base+'_ff'
+    else:
+        row_prod.loc['option_set'] = option_set_base+'_'
+        print('WARNING: no valid category, return_flag should have been raised in sku_struct_v2')
+    return row_prod
