@@ -113,5 +113,6 @@ def clean_products_df(df):
     df.sale_price = round(df.price*0.75,2)
     df.track_inventory = 'by option'
     df.product_condition = 'New'
+    df.option_set = 'inventory_rework_v0.9.1'
     df.product_name = [i.title() for i in df.product_name]
     return df
