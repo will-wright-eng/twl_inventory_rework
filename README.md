@@ -1,8 +1,8 @@
 # TWL -- Inventory Rework
 
-The inventory rework exercise was initiated as a part of digital integrations work, where our overarching goal is to implement skuIQ and Cadisto. From what I've found these two integration applications will automate inventory managment and order migration accross sales channels (Amazon and Ebay), eCommerce platform (BigCommerce), and the Point of Sale software (Lightspeed).
+The inventory rework exercise was initiated as a part of digital integrations work, where our overarching goal is to implement skuIQ and Cadisto for automated inventory managment and order migration accross sales channels (Amazon, eBay, and Walmart), eCommerce platform (BigCommerce), and the Point of Sale software (Lightspeed).
 
-This repo contains code used in processing inventory tables from BigCommerce (BC) and Lightspeed (LS).
+This repo contains code used in processing a subset of products from an inventory export table, into inventory import tables for BigCommerce (BC) and Lightspeed (LS) -- thereby standardizing product variance accross product categories. 
 
 ## General workflow thus far
 
@@ -12,6 +12,9 @@ This repo contains code used in processing inventory tables from BigCommerce (BC
 	- single product test successful
 4. reworked bc_fxns into ls_fxns_base to generate LS import table (no tests yet)
 5. repo cleanup
+6. tested LS import -- matrix tweaks made
+7. project rescoped to include all disc golf discs within standard models
+8. NEXT: parameterize vendor and refactor categories to standard disc golf models
 
 ### _File Dependencies_
 ![file_dependencies](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/file_dependencies.png)
@@ -23,8 +26,9 @@ This repo contains code used in processing inventory tables from BigCommerce (BC
 ### _Need_
 
 - ~~add sku modifier so that skus sort properly (parent then all child rows; add modifier, sort, remove modifier)~~
-- update linked skus in LS, then BC once LS is confirmed (test skus then in-bulk)
-- start planning Amazon/Cadisto implementation
+- ~~update linked skus in LS, then BC once LS is confirmed (test skus then in-bulk)~~
+- ~~start planning Amazon/Cadisto implementation~~
+- NEXT: parameterize vendor and refactor categories to standard disc golf models
 
 ### _Want_
 
@@ -36,6 +40,10 @@ This repo contains code used in processing inventory tables from BigCommerce (BC
 
 - bc_fxns_preprocess & filter_down_bc_product_list need to be combined and generalized to all products
 	- only utilized in downstream code for sku list and product cateogry
+- complete [package tutorial](https://packaging.python.org/tutorials/packaging-projects/) 
+	- setup.py
+	- standardized naming like lib and utils 
+- refactor base and core fxns into classes
 
 ## Important notes
 
@@ -51,17 +59,17 @@ _Anatomy of each system_
 
 __LightSpeed__
 
-- Importing inventory data: https://retail-support.lightspeedhq.com/hc/en-us/articles/229129988-Importing-inventory-data
-- Formatting item import files: https://retail-support.lightspeedhq.com/hc/en-us/articles/115005142408-Formatting-item-import-files
-- Creating matrices: https://retail-support.lightspeedhq.com/hc/en-us/articles/229130188-Creating-matrices
-- Formatting matrix for import: https://retail-support.lightspeedhq.com/hc/en-us/articles/115005187687
+- [Importing inventory data](https://retail-support.lightspeedhq.com/hc/en-us/articles/229129988-Importing-inventory-data)
+- [Formatting item import files](https://retail-support.lightspeedhq.com/hc/en-us/articles/115005142408-Formatting-item-import-files)
+- [Creating matrices](https://retail-support.lightspeedhq.com/hc/en-us/articles/229130188-Creating-matrices)
+- [Formatting matrix for import](https://retail-support.lightspeedhq.com/hc/en-us/articles/115005187687)
 
 __BigCommerce__
 
-- Importing and Exporting Products: https://support.bigcommerce.com/s/article/Importing-Exporting-Products#product-import
-- Troubleshooting | Data Import/Export: https://support.bigcommerce.com/s/article/Troubleshooting-Data-Import-Export#excel
-- Importing Product Options (v3): https://support.bigcommerce.com/s/article/Importing-Product-Options-v3
+- [Importing and Exporting Products](https://support.bigcommerce.com/s/article/Importing-Exporting-Products#product-import)
+- [Troubleshooting | Data Import/Export](https://support.bigcommerce.com/s/article/Troubleshooting-Data-Import-Export#excel)
+- [Importing Product Options (v3)](https://support.bigcommerce.com/s/article/Importing-Product-Options-v3)
 
 __Amazon__
 
-- Manage your inventory in bulk: https://sellercentral.amazon.com/gp/help/help-page.html?itemID=9DZLGS87GVDT94B&ref=au_9DZLGS87GVDT94B_bred_201201070
+- [Manage your inventory in bulk](https://sellercentral.amazon.com/gp/help/help-page.html?itemID=9DZLGS87GVDT94B&ref=au_9DZLGS87GVDT94B_bred_201201070)
