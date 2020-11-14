@@ -1,22 +1,10 @@
-# TWL -- Inventory Rework
+# TWL Inventory Rework
 
-The inventory rework exercise was initiated as a part of digital integrations work, where our overarching goal is to implement skuIQ and Cadisto for automated inventory managment and order migration accross sales channels (Amazon, eBay, and Walmart), eCommerce platform (BigCommerce), and the Point of Sale software (Lightspeed).
+The inventory rework project was initiated as a part of digital integrations implementation, where our overarching goal is to implement ~skuIQ and~ Cadisto for automated inventory managment and order migration accross sales channels (Amazon, eBay, and Walmart), eCommerce platform (BigCommerce), and the Point of Sale software (Lightspeed).
 
 This repo contains code used in processing a subset of products from an inventory export table, into inventory import tables for BigCommerce (BC) and Lightspeed (LS) -- thereby standardizing product variance accross product categories. 
 
-## General workflow thus far
-
-1. downloaded inventory from BC
-2. munged for Discraft product list (bc_fxns_preprocess & filter_down_bc_product_list)
-3. developed bc_fxns_base and bc_fxns_core to generate BC import table
-	- single product test successful
-4. reworked bc_fxns into ls_fxns_base to generate LS import table (no tests yet)
-5. repo cleanup
-6. tested LS import -- matrix tweaks made
-7. project rescoped to include all disc golf discs within standard models
-8. NEXT: parameterize vendor and refactor categories to standard disc golf models
-
-### _File Dependencies_
+### _Modules_
 ![file_dependencies](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/file_dependencies.png)
 
 ### _Directory_
@@ -79,3 +67,15 @@ __Amazon__
 ## Receiving Inventory Package
 
 ![receiving_inventory_plan](https://github.com/william-cass-wright/twl_inventory_rework/blob/master/images/receiving_inventory_plan.png)
+
+## General workflow thus far
+
+1. downloaded inventory from BC
+2. munged for Discraft product list (bc_fxns_preprocess & filter_down_bc_product_list)
+3. developed bc_fxns_base and bc_fxns_core to generate BC import table
+	- single product test successful
+4. reworked bc_fxns into ls_fxns_base to generate LS import table (no tests yet)
+5. repo cleanup
+6. tested LS import -- matrix tweaks made
+7. project rescoped to include all disc golf discs within standard models
+8. NEXT: parameterize vendor and refactor categories to standard disc golf models
