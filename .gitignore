@@ -1,4 +1,5 @@
 *.py[cod]
+*.png
 src/Untitled*
 *.ipynb_checkpoints
 __pycache__/
