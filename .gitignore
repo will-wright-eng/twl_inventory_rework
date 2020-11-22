@@ -5,6 +5,7 @@
 *.xlsx
 
 *.ipynb_checkpoints
+*.ipynb
 __pycache__/
 
 Untitled*
@@ -12,4 +13,7 @@ src/Untitled*
 src/config*
 .DS_Store
 
-bc_product_description_cleanup/tables
+!images/directory.png
+!images/file_dependencies.png
+!images/receiving_inventory_plan.png
+
