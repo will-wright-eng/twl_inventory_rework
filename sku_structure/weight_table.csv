@@ -1,9 +1,0 @@
-﻿weight_range,uom,codes,weights,dg1,dg2
-160-166,grams,6066,160-166 grams,TRUE,TRUE
-167-169,grams,6769,167-169 grams,TRUE,TRUE
-170-172,grams,7072,170-172 grams,TRUE,TRUE
-173-174,grams,7374,173-174 grams,TRUE,TRUE
-175-176,grams,7576,175-176 grams,TRUE,TRUE
-177-179,grams,7779,177-179 grams,TRUE,TRUE
-180,grams,8000,180 grams,FALSE,TRUE
-159,grams or less,5900,159 grams or less,FALSE,TRUE

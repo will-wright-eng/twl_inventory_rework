@@ -1,9 +1,15 @@
 *.py[cod]
-src/Untitled*
+*.png
+*.zip
+*.csv
+*.xlsx
+
 *.ipynb_checkpoints
 __pycache__/
 
-*.xlsx
-
+Untitled*
+src/Untitled*
 src/config*
 .DS_Store
+
+bc_product_description_cleanup/tables
