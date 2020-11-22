@@ -2,11 +2,14 @@
 *.png
 *.zip
 *.csv
-src/Untitled*
+*.xlsx
+
 *.ipynb_checkpoints
 __pycache__/
 
-*.xlsx
-
+Untitled*
+src/Untitled*
 src/config*
 .DS_Store
+
+bc_product_description_cleanup/tables
