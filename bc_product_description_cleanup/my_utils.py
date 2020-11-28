@@ -25,3 +25,13 @@ def process_cols_v2(cols):
     clean = [i.lower().replace(' ','_') for i in clean]
     clean = ['product_code_sku' if 'product_code' in i else i for i in clean]
     return clean
+
+def most_recent_product_file():
+    '''most_recent_product_file docstring'''
+    path = '.'
+    files = list_files_in_directory(path)
+    x = [i for i in files if 'products-' in i]
+    x.sort()
+    filepath = x[-1]
+    # print(filepath)
+    return filepath
