@@ -6,8 +6,9 @@ import re
 
 class clean_description(object):
     '''clean_description docstring'''
-    def __init__(self, desc):
+    def __init__(self, desc, regex_dict):
         self.desc = desc
+        self.regex_dict = regex_dict
         
     def clean(self):
         self.d = self.flight_chars_dict()
@@ -21,10 +22,22 @@ class clean_description(object):
         patterns = ['title="speed-(.+?)gif','title="glide-(.+?)gif','title="turn-(.+?)gif','title="fade-(.+?)gif']
         cats = ['speed','glide','turn','fade']
         d = {}
-        for pattern, cat in zip(patterns,cats):
-            match = re.findall(pattern,self.desc)
-            if len(match)==1:
-                d[cat] = match[0].replace('.','')
+        match_test = re.findall(patterns[0],self.desc)
+        if len(match_test)==1:
+            for pattern, cat in zip(patterns,cats):
+                match = re.findall(pattern,self.desc)
+                if len(match)>0:
+                    d[cat] = match[0][:-1]
+                else:
+                    d[cat] = 'NA'
+        else:
+            try:
+                pattern = '<li>Flight Characteristics:(.+?)</li>'
+                match = [i.strip() for i in re.findall(pattern,self.desc)[0].split('/')]
+                d = {i:j for i,j in zip(cats,match)}
+            except IndexError as e:
+                pass
+                #print(e)
         return d
 
     def remove_content(self):
@@ -32,49 +45,43 @@ class clean_description(object):
         - remove "Info about plastic" section
         - remove everything after "more information"
         - remove everything before the first paragraph tag'''
-        regex_dict = {
-            '<h3>FLIGHT CHARACTERISTICS</h3>.+?</a></p>':'',
-            # ' <p><span style.+?>Please note.+?</span></p>':'',
-            '<p>Information about <a title="Information about this plastic type.+?</p>':'',
-            '</ul> <h3>More Information</h3> <p>.+':'',
-            '<h3>SPECIFICATIONS</h3>.+?<li>Best':'<h3>SPECIFICATIONS</h3> <ul> <li>Best',
-            'Check out how it flies here.</p> <p><!-- mceItemMediaService.+?mceItemMediaService --></p>':''
-            }
-        for pattern in regex_dict:
-            self.desc = re.sub(pattern,regex_dict[pattern],self.desc)
-
+        for pattern in self.regex_dict:
+            self.desc = re.sub(pattern,self.regex_dict[pattern],self.desc)
         i = self.desc.find('<p>')
         if i==-1:
             pass
         else:
             self.desc = self.desc[i:]
-
         return self.desc
-    
+
+    def sub_pattern(self,pattern,sub1,sub2,funk):
+        '''sub_pattern docstring'''
+        pattern_list = re.findall(pattern,self.desc)
+        if len(pattern_list)>0:
+            for i,j in zip(pattern_list,[funk(i) for i in pattern_list]):
+                try:
+                    self.desc = re.sub(sub1.format(i),sub2.format(j),self.desc)
+                except re.error as e:
+                    print(e)
+
     def substitution(self):
         '''substitution docstring'''
-        def sub_pattern(pattern,sub1,sub2,funk):
-            pattern_list = re.findall(pattern,self.desc)
-            if len(pattern_list)>0:
-                for i,j in zip(pattern_list,[funk(i) for i in pattern_list]):
-                    self.desc = re.sub(sub1.format(i),sub2.format(j),self.desc)
-
         pattern = '<h3>(.+?)</h3>'
         sub1 = '<h3>{}</h3>'
         sub2 = '<h2>{}</h2>'
         funk = str.title
-        sub_pattern(pattern,sub1,sub2,funk)
+        self.sub_pattern(pattern,sub1,sub2,funk)
 
         pattern = '<li>(.+?)</li>'
         sub1 = '<li>{}</li>'
         funk = str.capitalize
-        sub_pattern(pattern,sub1,sub1,funk)
+        self.sub_pattern(pattern,sub1,sub1,funk)
 
         pattern = '<p><span style.+?;">([A-Z].+?)</span></p>'
         sub1 = '<p><span style.+?;">{}</span></p>'
         sub2 = '<p>{}</p>'
         funk = str
-        sub_pattern(pattern,sub1,sub1,funk)
+        self.sub_pattern(pattern,sub1,sub1,funk)
 
         return self.desc
 
@@ -86,5 +93,7 @@ class clean_description(object):
         s3 = '<li>Flight characteristics: {} ({})</li>'.format(s1,s2)
         s3 = s3.replace('zero','0')
         s3 = s3.replace('minus','')
+        pattern = '<h2>Specifications</h2> <ul> {}<li>Best'
+        self.desc = re.sub(pattern.format(''),pattern.format(s3),self.desc)
         note = '<li>Please note: stamp & exact color may vary</li></ul>'
-        return self.desc+s3+note
+        return self.desc+note
