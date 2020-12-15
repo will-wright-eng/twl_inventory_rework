@@ -32,12 +32,17 @@ class clean_description(object):
                     d[cat] = 'NA'
         else:
             try:
-                pattern = '<li>Flight Characteristics:(.+?)</li>'
+                pattern = '<li.+?Flight Characteristics:(.+?)</li>'
                 match = [i.strip() for i in re.findall(pattern,self.desc)[0].split('/')]
                 d = {i:j for i,j in zip(cats,match)}
             except IndexError as e:
-                pass
-                #print(e)
+                try:
+                    pattern = '<li.+?Flight characteristics:(.+?)</li>'
+                    match = [i.strip() for i in re.findall(pattern,self.desc)[0].split('/')]
+                    d = {i:j for i,j in zip(cats,match)}
+                except IndexError as e:
+                    pass
+                    #print(e)
         return d
 
     def remove_content(self):
@@ -96,4 +101,5 @@ class clean_description(object):
         pattern = '<h2>Specifications</h2> <ul> {}<li>Best'
         self.desc = re.sub(pattern.format(''),pattern.format(s3),self.desc)
         note = '<li>Please note: stamp & exact color may vary</li></ul>'
-        return self.desc+note
+        self.desc = re.sub('</ul>',note,self.desc)
+        return self.desc
