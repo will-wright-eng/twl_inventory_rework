@@ -13,7 +13,7 @@ This repo includes two projects thus far:
 2. Inventory Rework: converting product variance found in BigCommerce 'Bulk Edit' catalog export to Lightspeed bulk product import template -- thereby standardizing product variance accross product categories
 
 ## Repo Contents
-`
+```bash
 ├── bc_product_description_cleanup    
 │   ├── clean_description.py    
 │   ├── main.py  
@@ -36,12 +36,10 @@ This repo includes two projects thus far:
 │   │   └── utility_fxns.py  
 │   └── run.sh  
 └── sku_structure  
-    ├── WC-SKU\ sequence.xlsx  
     ├── color_table.csv  
-    ├── sku_schema.xlsx  
     ├── vendor_table.csv  
     └── weight_table.csv  
-`
+```
 ## Future Projects
 
 __Receiving Inventory Package (project plan)__
