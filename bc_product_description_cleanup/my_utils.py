@@ -33,5 +33,4 @@ def most_recent_product_file():
     x = [i for i in files if 'products-' in i]
     x.sort()
     filepath = x[-1]
-    # print(filepath)
     return filepath

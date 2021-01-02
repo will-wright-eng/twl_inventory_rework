@@ -15,9 +15,8 @@ import sys
 from PIL import Image
 
 from my_utils import list_files_in_directory, process_cols_v2
-from my_configs import prod_ids_filepath, prod_ids_test_filepath, product_export_file, \
-                        output_folder_html, output_folder_results, test_bool, imgs_bool, \
-                        regex_dict
+from my_configs import prod_ids_filepaths, product_export_file, output_folder_html, \
+                        output_folder_results, imgs_bool, regex_dict
 from clean_description import clean_description
 
 
@@ -105,27 +104,24 @@ def create_directory(folders):
 def main():
     '''main docstring'''
     df = product_df(product_export_file)
-    if test_bool:
-        prod_ids = list(pd.read_csv(prod_ids_test_filepath).product_id) # testset   
-        folder_name = 'testset' 
-    else:
+    for prod_ids_filepath in prod_ids_filepaths:
         prod_ids = list(product_df(prod_ids_filepath).product_id) # disc golf set 01
         folder_name = prod_ids_filepath.split('/')[-1].replace('.csv','')
-    folders = [
-        'results',
-        'results/'+folder_name,
-        'results/'+folder_name+'/'+output_folder_results,
-        'results/'+folder_name+'/'+output_folder_html
-        ]
-    create_directory(folders)
-    # print('start')
-    try:
-        cwd = os.getcwd()
-        os.chdir(cwd+'/results/'+folder_name)
-        run_process(df,prod_ids,output_folder_results,output_folder_html,folder_name)
-        # print('done')
-    finally:
-        os.chdir(cwd)
+        folders = [
+            'results',
+            'results/'+folder_name,
+            'results/'+folder_name+'/'+output_folder_results,
+            'results/'+folder_name+'/'+output_folder_html
+            ]
+        create_directory(folders)
+        # print('start')
+        try:
+            cwd = os.getcwd()
+            os.chdir(cwd+'/results/'+folder_name)
+            run_process(df,prod_ids,output_folder_results,output_folder_html,folder_name)
+            # print('done')
+        finally:
+            os.chdir(cwd)
 
 if __name__ == '__main__':
     main()
