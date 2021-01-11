@@ -14,31 +14,38 @@ This repo includes two projects thus far:
 
 ## Repo Contents
 ```bash
-├── bc_product_description_cleanup    
-│   ├── clean_description.py    
-│   ├── main.py  
-│   ├── my_configs.py  
-│   ├── my_utils.py  
-│   ├── results  
-│   ├── run.sh  
-│   └── tables  
-├── images  
-├── inventory_rework  
-│   ├── __init__.py  
-│   ├── bc_import_table.py  
-│   ├── bc_product_master_list.py  
-│   ├── ls_import_table.py  
-│   ├── modules  
-│   │   ├── bc_fxns_base.py  
-│   │   ├── bc_fxns_core.py  
-│   │   ├── bc_fxns_preprocess.py  
-│   │   ├── ls_fxns_base.py  
-│   │   └── utility_fxns.py  
-│   └── run.sh  
-└── sku_structure  
-    ├── color_table.csv  
-    ├── vendor_table.csv  
-    └── weight_table.csv  
+.
+├── LICENSE
+├── README.md
+├── images
+│   ├── directory.png
+│   ├── file_dependencies.png
+│   └── receiving_inventory_plan.png
+├── inventory_rework
+│   ├── README.md
+│   ├── __init__.py
+│   ├── bc_import_table.py
+│   ├── bc_product_master_list.py
+│   ├── ls_import_table.py
+│   ├── modules
+│   │   ├── __init__.py
+│   │   ├── bc_fxns_base.py
+│   │   ├── bc_fxns_core.py
+│   │   ├── bc_fxns_preprocess.py
+│   │   ├── ls_fxns_base.py
+│   │   └── utility_fxns.py
+│   └── run.sh
+├── product_description_cleanup
+│   ├── README.md
+│   ├── clean_description.py
+│   ├── main.py
+│   ├── my_configs.py
+│   ├── my_utils.py
+│   └── results
+└── sku_structure
+    ├── color_table.csv
+    ├── vendor_table.csv
+    └── weight_table.csv
 ```
 ## Future Projects
 
