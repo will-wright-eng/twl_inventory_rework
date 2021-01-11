@@ -8,12 +8,18 @@
 *.ipynb
 __pycache__/
 
+.DS_Store
+
 Untitled*
 src/Untitled*
 src/config*
-bc_product_description_cleanup/my_configs*
-.DS_Store
+*/my_configs.py
+*/results/
 
 !images/directory.png
 !images/file_dependencies.png
 !images/receiving_inventory_plan.png
+
+!sku_structure/color_table.csv
+!sku_structure/vendor_table.csv
+!sku_structure/weight_table.csv
