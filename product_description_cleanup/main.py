@@ -101,11 +101,30 @@ def create_directory(folders):
         except FileExistsError as e:
             print(e)
 
+def check_batch_overlap(prod_ids_filepath,batch_prod_ids):
+    '''check_batch_overlap docstring'''
+    folder = 'tables/'
+    files = [i for i in os.listdir(folder) if 'products-20' in i]
+    exclude_batch = prod_ids_filepath.split('/')[-1]
+    files = [i for i in files if i != exclude_batch]
+    prod_ids = []
+    for file in files:
+        df = pd.read_csv(folder+file)
+        df = df.loc[df['Product Type']=='P']
+        prod_id = list(df['Product ID'])
+        prod_ids.append(prod_id)
+    ids = [int(j) for i in prod_ids for j in i]
+    for prod_id in batch_prod_ids:
+        prod_id = int(prod_id)
+        if prod_id in ids:
+            print('WARNING: overlapping id found: '+str(prod_id))
+
 def main():
     '''main docstring'''
     df = product_df(product_export_file)
     for prod_ids_filepath in prod_ids_filepaths:
-        prod_ids = list(product_df(prod_ids_filepath).product_id) # disc golf set 01
+        prod_ids = list(product_df(prod_ids_filepath).product_id)
+        check_batch_overlap(prod_ids_filepath,prod_ids)
         folder_name = prod_ids_filepath.split('/')[-1].replace('.csv','')
         folders = [
             'results',

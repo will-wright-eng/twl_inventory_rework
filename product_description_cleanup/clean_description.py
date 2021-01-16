@@ -100,6 +100,9 @@ class clean_description(object):
         s3 = s3.replace('minus','')
         pattern = '<h2>Specifications</h2> <ul> {}<li>Best'
         self.desc = re.sub(pattern.format(''),pattern.format(s3),self.desc)
-        note = '<li>Please note: stamp & exact color may vary</li></ul>'
-        self.desc = re.sub('</ul>',note,self.desc)
+        if 'Please note: stamp & exact color may vary' in self.desc:
+            pass
+        else:
+            note = '<li>Please note: stamp & exact color may vary</li></ul>'
+            self.desc = re.sub('</ul>',note,self.desc)
         return self.desc
