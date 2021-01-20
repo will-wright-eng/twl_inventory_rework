@@ -6,9 +6,10 @@ import re
 
 class clean_description(object):
     '''clean_description docstring'''
-    def __init__(self, desc, regex_dict):
+    def __init__(self, desc, regex_dict, logger=None):
         self.desc = desc
         self.regex_dict = regex_dict
+        self.logger = logger
         
     def clean(self):
         self.d = self.flight_chars_dict()
@@ -42,14 +43,15 @@ class clean_description(object):
                     d = {i:j for i,j in zip(cats,match)}
                 except IndexError as e:
                     pass
-                    #print(e)
+                    self.logger.error(str(e)+' - no "Flight Chars" match in product description')
         return d
 
     def remove_content(self):
         ''' docstring for remove_content
         - remove "Info about plastic" section
         - remove everything after "more information"
-        - remove everything before the first paragraph tag'''
+        - remove everything before the first paragraph tag
+        '''
         for pattern in self.regex_dict:
             self.desc = re.sub(pattern,self.regex_dict[pattern],self.desc)
         i = self.desc.find('<p>')
@@ -67,7 +69,8 @@ class clean_description(object):
                 try:
                     self.desc = re.sub(sub1.format(i),sub2.format(j),self.desc)
                 except re.error as e:
-                    print(e)
+                    self.logger.error('sub_pattern')
+                    self.logger.error(e)
 
     def substitution(self):
         '''substitution docstring'''
@@ -101,6 +104,7 @@ class clean_description(object):
         pattern = '<h2>Specifications</h2> <ul> {}<li>Best'
         self.desc = re.sub(pattern.format(''),pattern.format(s3),self.desc)
         if 'Please note: stamp & exact color may vary' in self.desc:
+            self.logger.error('"please note" already present, likely this product id was already cleaned')
             pass
         else:
             note = '<li>Please note: stamp & exact color may vary</li></ul>'
