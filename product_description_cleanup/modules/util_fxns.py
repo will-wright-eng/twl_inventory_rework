@@ -9,24 +9,27 @@ import string
 import inspect
 import logging
 
+
 def files_in_directory(path):
     '''docstring for list_files_in_directory'''
     file_list = []
     cwd = os.getcwd()
-    for root, dirs, files in os.walk('.'+path):
+    for root, dirs, files in os.walk('.' + path):
         for file in files:
-            file_list.append(root+'/'+file)
+            file_list.append(root + '/' + file)
     return file_list
+
 
 def process_cols_v2(cols):
     '''docstring for process_cols
     for processing: remove special characters
     '''
     chars = re.escape(string.punctuation)
-    clean = [re.sub(r'['+chars+']', '',my_str) for my_str in cols]
-    clean = [i.lower().replace(' ','_') for i in clean]
+    clean = [re.sub(r'[' + chars + ']', '', my_str) for my_str in cols]
+    clean = [i.lower().replace(' ', '_') for i in clean]
     clean = ['product_code_sku' if 'product_code' in i else i for i in clean]
     return clean
+
 
 def most_recent_product_file():
     '''most_recent_product_file docstring'''
@@ -36,6 +39,7 @@ def most_recent_product_file():
     x.sort()
     filepath = x[-1]
     return filepath
+
 
 def function_logger(file_level, console_level=None, function_name=None):
     '''function_logger docstring'''
